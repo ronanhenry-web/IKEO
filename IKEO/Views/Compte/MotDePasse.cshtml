@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Mot de passe";
+}
+
+<h3 class="text-center pb-3">Mot de passe</h3>
+
+<form>
+    <div class="d-flex flex-column align-items-center gap-3">
+        <div class="w-50">
+            <label for="ancienMdp">Ancien mot de passe</label>
+            <input id="ancienMdp" type="password" class="form-control">
+        </div>
+        <div class="w-50">
+            <label for="nouveauMdp">Nouveau mot de passe</label>
+            <input id="nouveauMdp" type="password" class="form-control">
+        </div>
+        <div class="w-50">
+            <label for="confirmationNouveauMdp">Confirmation du nouveau mot de passe</label>
+            <input id="confirmationNouveauMdp" type="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary w-50">Valider</button>
+    </div>
+</form>

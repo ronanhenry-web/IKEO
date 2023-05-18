@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Panneau d'administration";
+}
+
+@if (!IKEO.Tools.LayoutTools.GotAdminRights())
+{
+    Response.RedirectToRoute(new
+    {
+        controller = "Home",
+        action = "Index"
+    });
+}
+
+<div class="d-flex justify-content-center h-100 mt-5">
+    <h3>Bienvenue sur le panneau d'administration</h3>
+</div>

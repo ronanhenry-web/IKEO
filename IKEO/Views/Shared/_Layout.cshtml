@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IKEO</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/Header.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link rel="stylesheet" href="~/Content/css/Layout.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.css" />
+    <link rel="stylesheet" href="~/Content/css/select2.min.css" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+</head>
+<body class="d-flex flex-column">
+    @*    <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v15.0" nonce="DSL3fCtQ"></script>*@
+
+
+
+    <header>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasLeftLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="ProduitPopulaire">
+                    <h2>Produits populaires</h2>
+                    <h4>Armoir</h4>
+                    <h4>Table</h4>
+                    <h4>Chaises</h4>
+                </div>
+                <div>
+                    <a class="text-dark" href="/Home/Contact">
+                        <h2>Contact</h2>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+
+                <a class="navbar-brand ps-4" onclick="location.href='@Url.Action("Index","Home")'"><img class="img-brand" alt="IKEO" src="~/Content/images/logo-brand.png" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="col">
+
+                </div>
+                <div class="col">
+                    <div class="navbar-collapse collapse d-flex justify-content-center">
+                        <input class="form-control" type="text" placeholder="Recherche" />
+                    </div>
+                </div>
+                <div class="col">
+
+                </div>
+                @if (IKEO.Tools.LayoutTools.GotAdminRights())
+                {
+                    <div class="d-flex d-sm-inline-flex">
+                        <button onclick="location.href='@Url.Action("Index", "Admin")'" type="button" class="btn rounded-pill btn-outline-secondary">
+                            <i class="fa fa-wrench fs-5"></i>
+                        </button>
+                    </div>
+                }
+                <div class="d-flex d-sm-inline-flex pe-4">
+                    @{
+                        if (Session["UserID"] == null)
+                        {
+                            <button onclick="location.href='@Url.Action("Connexion","Compte")'" type="button" class="btn rounded-pill btn-outline-secondary">Se connecter</button>
+                        }
+                        else
+                        {
+                            <button onclick="location.href='@Url.Action("Index","Compte")'" type="button" class="btn rounded-pill btn-outline-secondary">@Session["UserPrenom"] @Session["UserNom"]</button>
+                        }
+                    }
+
+                </div>
+                <div class="d-flex d-sm-inline-flex">
+                    <button onclick="location.href='@Url.Action("Index", "Panier")'" type="button" class="btn rounded-pill btn-outline-secondary position-relative">
+                        <i class="fa fa-shopping-cart fs-5"></i>
+                        
+                            @if (Session["UserID"] != null)
+                            {
+                                <span id="nombreArticleDansPanier" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                            }
+                        
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main">
+            @if (@ViewContext.RouteData.Values["controller"].ToString() == "Compte" && Session["UserID"] != null)
+            {
+                <div class="row">
+                    <p class="text-primary m-0">
+                        <a class="text-decoration-none text-primary" href="@Url.Action("Index", "Compte")">Votre compte </a>
+                        @if ((String)ViewData["Title"] != "Index")
+                        {
+                            <span class="text-dark">> @ViewData["Title"]</span>
+                        }
+                    </p>
+                </div>
+                <hr class="mt-1" />
+                <div class="row">
+                    <div class="col-4 pt-5">
+                        <div class="row pb-2">
+                            <p class="text-center">
+                                <a class="text-decoration-none text-dark" href="@Url.Action("Information", "Compte")">Mes informations</a>
+                            </p>
+                            <hr />
+                        </div>
+                        <div class="row pb-2">
+                            <p class="text-center">
+                                <a class="text-decoration-none text-dark" href="@Url.Action("MotDePasse", "Compte")">Mot de passe</a>
+                            </p>
+                            <hr />
+                        </div>
+                        <div class="row pb-2">
+                            <p class="text-center">
+                                <a class="text-decoration-none text-dark" href="@Url.Action("Commande", "Compte")">Mes Commandes</a>
+                            </p>
+                            <hr />
+                        </div>
+                        <div class="row pb-2">
+                            <p class="text-center"><a class="text-decoration-none text-dark" href="@Url.Action("InformationsPaiement", "Compte")">Mes cartes de paiement</a></p>
+                            <hr />
+                        </div>
+                        <div class="row pb-2">
+                            <p class="text-center">
+                                <a class="text-decoration-none text-danger" href="@Url.Action("Deconnecter", "Compte")">Se déconnecter</a>
+                            </p>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="d-flex h-100">
+                            <div class="vr text-black"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        @RenderBody()
+                    </div>
+                </div>
+            }
+            else if (@ViewContext.RouteData.Values["controller"].ToString() == "Admin" && Session["UserID"] != null && IKEO.Tools.LayoutTools.GotAdminRights())
+            {
+                <div class="row">
+                    <p class="text-primary m-0">
+                        <a class="text-decoration-none text-primary" href="@Url.Action("Index", "Admin")">Administration </a>
+                        <span class="text-dark">> @ViewData["Title"]</span>
+                    </p>
+                </div>
+                <hr class="mt-1" />
+                <div class="row">
+                    <div class="col-4 pt-5">
+                        <div class="row pb-2">
+                            <a class="text-decoration-none text-dark" href="@Url.Action("Articles", "Admin")">
+                                <p class="text-center">
+                                    <i class="me-2 fa fa-newspaper-o"></i>Gestion des articles
+                                </p>
+                            </a>
+                            <hr />
+                        </div>
+                        <div class="row pb-2">
+                            <a class="text-decoration-none text-dark" href="@Url.Action("Utilisateurs", "Admin")">
+                                <p class="text-center ">
+                                    <i class="me-2 fa fa-user"></i>Gestion des utilisateurs
+                                </p>
+                            </a>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="d-flex h-100">
+                            <div class="vr text-black"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        @RenderBody()
+                    </div>
+                </div>
+            }
+            else if (@ViewContext.RouteData.Values["controller"].ToString() == "Panier")
+            {
+                <div class="row">
+                    <p class="text-primary m-0">
+                        <a class="text-decoration-none text-primary" href="@Url.Action("Index", "Panier")">Mon panier </a>
+                        @if ((String)ViewData["EtapePanier"] == "EtapeDeux")
+                        {
+                            <span class="text-dark">> Livraison</span>
+                        }
+                        else if ((String)ViewData["EtapePanier"] == "EtapeTrois")
+                        {
+                            <span class="text-dark">> Livraison > Paiement</span>
+                        }
+                        else if ((String)ViewData["EtapePanier"] == "EtapeQuatre")
+                        {
+                            <span class="text-dark">> Livraison > Paiement > Validation de ma commande</span>
+                        }
+                        else if ((String)ViewData["EtapePanier"] == "EtapeCinq")
+                        {
+                            <span class="text-dark">> Livraison > Paiement > Validation de ma commande > Commande effectuée</span>
+                        }
+                    </p>
+                </div>
+                <hr class="mt-1" />
+                @RenderBody()
+
+            }
+            else
+            {
+                @RenderBody()
+            }
+
+        </main>
+    </div>
+
+    <footer class="fixed-bottom">
+        <div class="text-center lh-1 d-inline">
+            <p class="p-0">Copyright © @DateTime.Today.Year.ToString()</p>
+            <p class="lien-footer  p-0">
+                <a class="text-dark" href="/Home/MentionsLégales">Mentions légales</a> |
+                <a class="text-dark" href="/Home/RGPD">RGPD</a> |
+                <a class="text-dark" href="/Home/ConditionGeneralVente">Conditions Général de Vente</a> |
+                <a class="text-dark" href="/Home/Contact">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
+@if (Session["UserID"] != null)
+{
+<script>
+
+    let formData = new FormData();
+    $.ajax({
+        url: "@Url.Action("NumberInPanier", "Home")",
+        type: "POST",
+        data: formData,
+        contentType: 'application/json',
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            if (response.type == "ok")
+                $("#nombreArticleDansPanier").html(response.message);
+
+        }
+    });
+
+</script>
+}

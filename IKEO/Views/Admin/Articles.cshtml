@@ -1,0 +1,345 @@
+﻿
+@{
+    ViewBag.Title = "Gestion des articles";
+}
+@if (!IKEO.Tools.LayoutTools.GotAdminRights())
+{
+    Response.RedirectToRoute(new
+    {
+        controller = "Home",
+        action = "Index"
+    });
+}
+<h2 class="text-center">Gestion des articles</h2>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end mb-1">
+    <button id="ajouterArticle" class="btn btn-primary me-md-2" type="button"><i class="fa fa-plus pe-2"></i>Ajouter un article</button>
+</div>
+<div class="container-fluid">
+    <table class="table table-striped table-bordered table-responsive-xxl">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Stocks</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Couleurs</th>
+                <th scope="col">Notation</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter un article</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" data-id="">
+
+                <div class="mb-3 row">
+                    <label for="artName" class="col-sm-4 col-form-label">Nom du produit</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="artName">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="artDesc" class="form-label">Description</label>
+                    <textarea class="form-control pe-4 ps-4" id="artDesc" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="artPrix" class="col-sm-4 col-form-label">Prix</label>
+                    <div class="col">
+                        <input type="number" min="0" value="0" class="form-control" id="artPrix">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="artStoc" class="col-sm-4 col-form-label">Stock du produit</label>
+                    <div class="col">
+                        <input type="number" min="0" value="0" class="form-control" id="artStoc">
+                    </div>
+                </div>
+
+
+                <div class="mb-3 row">
+                    <label for="staticEmail" class="col-sm-4 col-form-label">Couleur</label>
+                    <div class="col">
+                        <select id="couleur" style="width: 100%" class="form-select" multiple>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="staticEmail" class="col-sm-4 col-form-label">Categorie</label>
+                    <div class="col">
+                        <select id="categorie" class="form-select">
+                            <option selected value="null">Choisir un catégorie</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="file" id="fileUpload" multiple>
+                </div>
+                <div id="divImg" class='mb-3 row row-cols-2'>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary save">Enregistrer le nouvel article</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("GetArticles", "Admin")",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            if (response.type == "ok") {
+                let html = "";
+                if (response.message.length > 0) {
+                    response.message.forEach(function (article) {
+
+                        let rating = article.Notation;
+                        let starRatingHtml = "<div class='row d-flex justify-content-center'>";
+                        for (let i = 0; i < 5; i++) {
+                            starRatingHtml += "<div class='col-auto pe-0 ps-0'>"
+                            if (i <= Math.round(rating))
+                                starRatingHtml += "<span class='fa fa-star checked'></span>"
+                            else
+                                starRatingHtml += "<span class='fa fa-star'></span>"
+                            starRatingHtml += "</div>"
+                        }
+                        starRatingHtml += "</div>";
+
+                        let colorHtml = "<div class='row'>"
+                        article.Couleurs.forEach(function (couleur) {
+                            colorHtml += "<div class='col col-auto pe-1 ps-1'><span><input disabled type='color' class='form-control form-control-color' value='#" + couleur.Hexa +"'></span></div>"
+                        });
+
+                        colorHtml += "</div>"
+
+                        let boutonHtml =
+                            "<button type='button' class='btn btn-primary modifierBtn'><i class='fa fa-pencil'></i></button>"
+
+                        if (article.Visible)
+                            boutonHtml += "<button type='button' class='btn btn-success visibleBtn'><i class='fa fa-eye'></i></button>"
+
+                        else
+                            boutonHtml += "<button type='button' class='btn btn-secondary visibleBtn'><i class='fa fa-eye-slash'></i></button>"
+
+                        html +=
+                            "<tr data-id='" + article.Id +"'> " +
+                            "<td>" + article.Nom + "</td>" +
+                            "<td>" + article.Description +"</td>" +
+                            "<td>" + article.Stocks +"</td>" +
+                            "<td>" + article.Prix + "</td>" +
+                            "<td>" + article.Categorie.Nom + "</td>" +
+                             "<td>" + colorHtml +"</td>" +
+                            "<td>" + starRatingHtml +"</td>" +
+                            "<td class='text-center'>" + boutonHtml +"</td>" +
+                            "</tr>"
+                    })
+
+                }
+                else {
+                    html +=
+                        "<tr>" +
+                        "<td colspan='5'> Aucun article enregistré </td>" +
+                        "</tr>"
+                }
+                $("tbody").append(html);
+
+
+                $(".modifierBtn").on("click", function () {
+
+                    let idBtn = $(this).parent().parent().data("id")
+                    let formData = new FormData();
+                    formData.append("id", idBtn);
+
+                    $.ajax({
+                        url: "@Url.Action("recupererInfoArticle", "Admin")",
+                        type: "POST",
+                        data: formData,
+                        contentType: 'application/json',
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        success: function (response)
+                        {
+
+                            $(".modal-body").data("id", response.message.Id);
+                            $("#artName").val(response.message.Nom)
+                            $("#artDesc").val(response.message.Description)
+                            $("#artStoc").val(response.message.Stocks)
+                            $("#artPrix").val(response.message.Prix)
+
+                            let arrayColor = [];
+                            response.message.Couleurs.forEach(function (c) {
+                                arrayColor.push(c.Id)
+                            });
+                            $("#couleur").val(arrayColor);
+                            $("#couleur").change();
+                            $("#categorie").val(response.message.Categorie.Id);
+
+                            let html = "";
+                            response.message.Images.forEach(function (c) {
+                                html += '<div class="col"><img class="img-thumbnail" src="../Content/images/Articles/' + response.message.Id + '/' + c.NomImage + '"/></div>';
+                            })
+
+                            console.log(html);
+                            $("#divImg").append(html);
+
+                            $(".modal-title").html("Modifier un article")
+                            $(".save").html("Sauvegarder modifications")
+                            $(".modal").modal("show");
+                        }
+                    });
+
+
+
+                });
+                $(".visibleBtn").on("click", function () {
+                    let formData = new FormData();
+                    formData.append("id", $(this).parent().parent().data("id"))
+
+                    if ($(this).find("i").hasClass("fa-eye")) {
+                        $(this).find("i").removeClass("fa-eye")
+                        $(this).find("i").addClass("fa-eye-slash")
+                        $(this).addClass("btn-secondary");
+                        $(this).removeClass("btn-success");
+                        formData.append("visibilite", false)
+                    }
+                    else if ($(this).find("i").hasClass("fa-eye-slash")) {
+                        $(this).find("i").removeClass("fa-eye-slash")
+                        $(this).find("i").addClass("fa-eye")
+                        $(this).addClass("btn-success");
+                        $(this).removeClass("btn-secondary");
+                        formData.append("visibilite", true)
+                    }
+
+                    $.ajax({
+                        url: "@Url.Action("ModifierVisibilite", "Admin")",
+                        type: "POST",
+                        data: formData,
+                        contentType: 'application/json',
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+
+                        }
+                    });
+                });
+            }
+        }
+    });
+
+    $("#ajouterArticle").on("click", function () {
+        $(".modal").modal("show");
+        $(".modal-title").html("Ajouter un article")
+        $(".modal-body").data("id", "");
+        $(".save").html("Enregistrer le nouvel article")
+        $("#divImg .col").remove();
+        $("#artName").val("")
+        $("#artDesc").val("")
+        $("#artStoc").val("")
+        $("#artPrix").val("")
+        $("#couleur").val("");
+        $("#couleur").change();
+        $("#categorie").val("")
+    })
+
+    $(".close, .btn-close").on("click", function () {
+        $(".modal").modal("hide");
+    })
+
+    $(".save").on("click", function () {
+        let artName = $("#artName").val()
+        let artDesc = $("#artDesc").val()
+        let artStoc = $("#artStoc").val()
+        let artPrix = $("#artPrix").val()
+        let artColo = $("#couleur").select2("val");
+        let artCate = $("#categorie").val()
+
+        if (!artName.replace(/\s/g, "") || isNaN(artStoc) || artColo.length <= 0 || !artCate)
+            return
+
+
+
+
+        let formData = new FormData();
+        formData.append("id", ($(".modal-body").data("id") == "") ? null : $(".modal-body").data("id"))
+        formData.append("artName", artName)
+        formData.append("artDesc", artDesc)
+        formData.append("artStoc", artStoc)
+        formData.append("artPrix", artPrix)
+        formData.append("artColo", JSON.stringify(artColo.map(Number)))
+        formData.append("artCate", artCate)
+
+        let fileUploads = $("#fileUpload").prop('files');
+        for (let i = 0; i < fileUploads.length; i++)
+            formData.append(fileUploads[i].name, fileUploads[i])
+
+
+
+
+        $.ajax({
+            url: "@Url.Action("AjouterArticle", "Admin")",
+            type: "POST",
+            data: formData,
+            contentType: 'application/json',
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                location.reload();
+            }
+        });
+
+    })
+
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("GetCategorieAndColor", "Admin")",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            let optionCa = "";
+            response.lCa.forEach(function (ca) {
+                optionCa += "<option value='" + ca.Id + "'>" + ca.Nom + "</option>";
+            });
+
+
+            let optionCo = "";
+            response.lCo.forEach(function (co) {
+                optionCo += "<option value='" + co.Id + "'>" + co.Nom + "</option>";
+            });
+
+            $("#categorie").append(optionCa);
+            $("#couleur").append(optionCo);
+        }
+    });
+
+    $('#couleur').select2({
+        dropdownParent: $(".modal"),
+    });
+
+</script>

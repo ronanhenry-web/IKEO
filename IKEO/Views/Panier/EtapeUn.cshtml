@@ -1,0 +1,102 @@
+﻿@using System.Linq;
+@{
+
+    var articlePanier = ViewBag.Panier;
+    var total = 0;
+}
+
+<div class="container pt-3">
+    <div class="row">
+        <div class="col-md-8">
+            @{
+
+                foreach (var articleDansPanier in articlePanier.ArticlePanier)
+                {
+                    total += articleDansPanier.nombre_article * articleDansPanier.Article.prix;
+                    var imagePresentation = IKEO.Tools.LayoutTools.GetPresentationImage(articleDansPanier.id_article);
+                    <div class="card mb-3" data-id="@articleDansPanier.id">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <img src="~/Content/images/Articles/@articleDansPanier.id_article/@imagePresentation" alt="Article 1" class="mr-3 img-fluid rounded" style="width: 300px; height: 200px;">
+                                <div class="flex-grow-1 mx-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title font-weight-bold">@articleDansPanier.Article.nom</h5>
+                                        <p class="font-weight-bold">@articleDansPanier.Article.prix €</p>
+                                    </div>
+                                    <p class="card-text">@articleDansPanier.Article.description</p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn deleteArticle btn-danger">Supprimer</button>
+                                        <input type="number" min="0" id="nmbrArticle" class="form-control w-15" value="@articleDansPanier.nombre_article">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            @if (total == 0)
+            {
+                <h3>Aucun article dans le panier</h3>
+            }
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="d-flex justify-content-between pb-4">
+                        Total<span id="totalPrix">@total €</span>
+                    </h5>
+                    @if (total != 0)
+                    {
+                        <a class="btn btn-primary w-100" href="@Url.Action("Index", "Panier", new { nomEtape = "EtapeDeux" })">Payer</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#nmbrArticle").on("change", function () {
+        let formData = new FormData();
+
+        let id = $(this).parent().parent().parent().parent().parent().data("id")
+        formData.append("id", id);
+        formData.append("valeur", $(this).val());
+        $.ajax({
+            url: "@Url.Action("ChangerNombreDansPanier", "Panier")",
+            type: "POST",
+            data: formData,
+            contentType: 'application/json',
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                location.reload()
+
+            }
+        });
+
+    })
+
+    $(".deleteArticle").on('click', function () {
+        let formData = new FormData();
+        let id = $(this).parent().parent().parent().parent().parent().data("id")
+        formData.append("id", id)
+
+        $.ajax({
+            url: "@Url.Action("SuprimerArticleDansPanier", "Panier")",
+            type: "POST",
+            data: formData,
+            contentType: 'application/json',
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $(".card[data-id='" + id + "']").remove();
+                location.reload()
+
+            }
+        });
+    });
+</script>

@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Détail article";
+    var article = ViewBag.Article;
+}
+
+<div>
+    <h2>Article</h2>
+    <hr />
+</div>
+
+<div class="row mx-5 d-flex justify-content-center">
+    <div class="col-4 col-xl-2 d-flex flex-column justify-content-between gap-2 gap-xl-0">
+        <div class="overflow-auto" style="max-height:300px;"id="scrollable-div">
+            @foreach (var image in article.Images)
+            {
+                <img class="img-fluid pb-2" src="~/Content/images/Articles/@article.Id/@image.NomImage" />
+            }
+        </div>
+    </div>
+    <div class="col-8 col-xl-6">
+        <img id="right-image" style="height: 30rem!important; width:auto;" class="img-fluid mx-auto d-block" src="~/Content/images/Articles/@article.Id/@article.ImagePresentation" />
+    </div>
+    <div class="col col-xl-4 mt-4 mt-xl-0">
+        <h5 class="d-flex justify-content-between">
+            <span><b>@article.Nom</b></span><span class="text-nowrap"><b>@article.Prix €</b></span>
+        </h5>
+
+        <p class="justify-text">
+            @article.Description
+        </p>
+        <div class="row ms-1">
+            @for (int i = 0; i < 5; i++)
+            {
+                <div class='col-auto pe-0 ps-0'>
+                    @if (i < article.Notation)
+                    {
+                        <span class='fa fa-star checked'></span>
+                    }
+                    else
+                    {
+                        <span class='fa fa-star'></span>
+                    }
+                </div>
+            }
+        </div>
+        <hr />
+        @if (article.Stocks > 0)
+        {
+            <span>@article.Stocks en stock</span>
+        }
+        else
+        {
+            <p>Plus de stock</p>
+        }
+        <hr />
+        <button type="button" id="ajouterPanier" class="btn btn-primary w-100">Ajouter au panier</button>
+    </div>
+</div>
+
+<script>
+
+    $("#right-image").on("load", function () {
+        var rightImage = $("#right-image");
+        var scrollableDiv = document.getElementById("scrollable-div");
+
+        var maxHeight = rightImage.height();
+        scrollableDiv.style.maxHeight = maxHeight + "px";
+    });
+    $('#ajouterPanier').on("click", function () {
+        let formData = new FormData();
+        formData.append("id", parseInt("@article.Id", 10))
+
+          $.ajax({
+            url: "@Url.Action("AjouterArticleDansPanier", "Panier")",
+            type: "POST",
+            data: formData,
+            contentType: 'application/json',
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                location.reload()
+                }
+            });
+    })
+    
+
+
+    $(window).on('resize', function () {
+        var rightImage = $("#right-image");
+        var scrollableDiv = document.getElementById("scrollable-div");
+        console.log("test")
+        var maxHeight = rightImage.height();
+        scrollableDiv.style.maxHeight = maxHeight + "px";
+    })
+</script>

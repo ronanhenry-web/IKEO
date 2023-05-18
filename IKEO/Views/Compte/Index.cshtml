@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    var utilisateur = ViewBag.infoUtilisateur;
+}
+
+@if (utilisateur != null && Convert.ToInt32(Session["UserID"]) == utilisateur.id)
+{
+   
+    <div class="d-flex justify-content-center h-100 mt-5">
+        <h3>Bonjour @Session["UserPrenom"] @Session["UserNom"]</h3>
+    </div>
+
+}

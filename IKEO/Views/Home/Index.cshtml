@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var listeCouleur = ViewBag.Couleur;
+    var currentUser = ViewBag.CurrentUser;
+}
+
+<div class="container-fluid">
+    <div class="row col-lg-auto">
+        <h2>Produits meubles</h2>
+        <hr class="mb-4" />
+    </div>
+
+    <div class="row">
+        <!-- Parti filtre -->
+        <div class="col-2 filter">
+            <form method="post" action="@Url.Action("FiltrerArticles", "Home")">
+                <select class="form-select mb-3" name="tri" aria-label="">
+                    <option selected disabled hidden>Trier par </option>
+                    <option value="croissant">Prix Croissant</option>
+                    <option value="decroissant">Prix Décroissant</option>
+                </select>
+
+                <select class="form-select mb-3" name="couleur" aria-label="">
+                    <option selected disabled hidden>Couleur</option>
+                    @foreach (var couleur in ViewBag.Couleur)
+                    {
+                        <option value="@couleur.id">@couleur.couleur1</option>
+                    }
+                </select>
+
+                <select class="form-select mb-3" name="categorie" aria-label="">
+                    <option selected disabled hidden>Catégorie</option>
+                    @foreach (var categorie in ViewBag.Categorie)
+                    {
+                        <option value="@categorie.id">@categorie.nom</option>
+                    }
+                </select>
+
+                <div class="d-flex justify-content-end"><button class="btn btn-primary" type="submit" name="submit" value="submit">Filtrer</button></div>
+            </form>
+        </div>
+        <div class="col-auto">
+            <div class="d-flex h-100">
+                <div class="vr text-black"></div>
+            </div>
+        </div>
+        <!-- Parti article -->
+        <div class="col-8">
+            @if (ViewBag.Message != null)
+            {
+                <p>@ViewBag.Message</p>
+            }
+            else
+            {
+        <div class="row row-cols-3">
+
+            @foreach (var article in ViewBag.Article)
+            {
+
+                <div class="col-auto">
+                    <div class="card border-0 h-100" style="width: 16rem;">
+                        <a class="text-dark text-decoration-none" href="@Url.Action("Index", "Article", new { id = article.Id })">
+                            <img style="height:10rem!important; width:auto;" src="~/Content/images/Articles/@article.Id/@article.ImagePresentation" class="card-img-top mx-auto d-block" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <a class="text-dark text-decoration-none" href="@Url.Action("Index", "Article", new { id = article.Id })">
+                                <p class="h5 text-dark fw-bold">
+                                    @article.Nom
+                                </p>
+                                <p class="card-text text-secondary">
+                                    @article.Description
+                                </p>
+                                <h5 class="card-price fw-bold">
+                                    @article.Prix €
+                                </h5>
+                            </a>
+                                <div class="row p-s-07">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        <div class='col-auto pe-0 ps-0'>
+                                        @if (i < article.Notation)
+                                        {
+                                            <span class='fa fa-star checked'></span>
+                                        }
+                                        else
+                                        {
+                                            <span class='fa fa-star'></span>
+                                        }
+                                        </div>
+                                    }
+                                </div>
+                               
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+            }
+        </div>
+    </div>
+</div>

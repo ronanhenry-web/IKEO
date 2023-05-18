@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="IkeoDBModelStoreContainer" CdmEntityContainer="IkeoDBEntities">
+    <EntitySetMapping Name="Adresse">
+      <EntityTypeMapping TypeName="IkeoDBModel.Adresse">
+        <MappingFragment StoreEntitySet="Adresse">
+          <ScalarProperty Name="id_utilisateur" ColumnName="id_utilisateur" />
+          <ScalarProperty Name="adresse1" ColumnName="adresse" />
+          <ScalarProperty Name="codepostal" ColumnName="codepostal" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Article">
+      <EntityTypeMapping TypeName="IkeoDBModel.Article">
+        <MappingFragment StoreEntitySet="Article">
+          <ScalarProperty Name="disponibilite" ColumnName="disponibilite" />
+          <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+          <ScalarProperty Name="nbrStock" ColumnName="nbrStock" />
+          <ScalarProperty Name="prix" ColumnName="prix" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArticleCommande">
+      <EntityTypeMapping TypeName="IkeoDBModel.ArticleCommande">
+        <MappingFragment StoreEntitySet="ArticleCommande">
+          <ScalarProperty Name="prix" ColumnName="prix" />
+          <ScalarProperty Name="quantite" ColumnName="quantite" />
+          <ScalarProperty Name="id_article" ColumnName="id_article" />
+          <ScalarProperty Name="id_commande" ColumnName="id_commande" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArticleCouleurs">
+      <EntityTypeMapping TypeName="IkeoDBModel.ArticleCouleurs">
+        <MappingFragment StoreEntitySet="ArticleCouleurs">
+          <ScalarProperty Name="id_couleur" ColumnName="id_couleur" />
+          <ScalarProperty Name="id_article" ColumnName="id_article" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorie">
+      <EntityTypeMapping TypeName="IkeoDBModel.Categorie">
+        <MappingFragment StoreEntitySet="Categorie">
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Commande">
+      <EntityTypeMapping TypeName="IkeoDBModel.Commande">
+        <MappingFragment StoreEntitySet="Commande">
+          <ScalarProperty Name="id_panier" ColumnName="id_panier" />
+          <ScalarProperty Name="etat_paiement" ColumnName="etat_paiement" />
+          <ScalarProperty Name="etat_livraison" ColumnName="etat_livraison" />
+          <ScalarProperty Name="prix_commande" ColumnName="prix_commande" />
+          <ScalarProperty Name="numero_commande" ColumnName="numero_commande" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Couleur">
+      <EntityTypeMapping TypeName="IkeoDBModel.Couleur">
+        <MappingFragment StoreEntitySet="Couleur">
+          <ScalarProperty Name="hexadecimal" ColumnName="hexadecimal" />
+          <ScalarProperty Name="couleur1" ColumnName="couleur" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notation">
+      <EntityTypeMapping TypeName="IkeoDBModel.Notation">
+        <MappingFragment StoreEntitySet="Notation">
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="id_utilisateur" ColumnName="id_utilisateur" />
+          <ScalarProperty Name="id_article" ColumnName="id_article" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Panier">
+      <EntityTypeMapping TypeName="IkeoDBModel.Panier">
+        <MappingFragment StoreEntitySet="Panier">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IkeoDBModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="designation" ColumnName="designation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Utilisateur">
+      <EntityTypeMapping TypeName="IkeoDBModel.Utilisateur">
+        <MappingFragment StoreEntitySet="Utilisateur">
+          <ScalarProperty Name="civilite" ColumnName="civilite" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_role" ColumnName="id_role" />
+          <ScalarProperty Name="id_cartebancaire" ColumnName="id_cartebancaire" />
+          <ScalarProperty Name="id_panier" ColumnName="id_panier" />
+          <ScalarProperty Name="confirm" ColumnName="confirm" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="mdp" ColumnName="mdp" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImagesArticle">
+      <EntityTypeMapping TypeName="IkeoDBModel.ImagesArticle">
+        <MappingFragment StoreEntitySet="ImagesArticle">
+          <ScalarProperty Name="nom_image" ColumnName="nom_image" />
+          <ScalarProperty Name="id_article" ColumnName="id_article" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArticlePanier">
+      <EntityTypeMapping TypeName="IkeoDBModel.ArticlePanier">
+        <MappingFragment StoreEntitySet="ArticlePanier">
+          <ScalarProperty Name="nombre_article" ColumnName="nombre_article" />
+          <ScalarProperty Name="id_article" ColumnName="id_article" />
+          <ScalarProperty Name="id_panier" ColumnName="id_panier" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarteBancaire">
+      <EntityTypeMapping TypeName="IkeoDBModel.CarteBancaire">
+        <MappingFragment StoreEntitySet="CarteBancaire">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="dateExpiration" ColumnName="dateExpiration" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

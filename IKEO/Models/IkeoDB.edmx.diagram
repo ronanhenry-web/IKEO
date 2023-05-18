@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="da77f3e6acb1451ebf89f189f20ecf50" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="IkeoDBModel.Adresse" Width="1.5" PointX="9.125" PointY="0.625" />
+        <EntityTypeShape EntityType="IkeoDBModel.Article" Width="1.5" PointX="7.625" PointY="12.875" />
+        <EntityTypeShape EntityType="IkeoDBModel.ArticleCommande" Width="1.5" PointX="2.625" PointY="16.5" />
+        <EntityTypeShape EntityType="IkeoDBModel.ArticleCouleurs" Width="1.5" PointX="10.25" PointY="15.875" />
+        <EntityTypeShape EntityType="IkeoDBModel.Categorie" Width="1.5" PointX="10.375" PointY="12.75" />
+        <EntityTypeShape EntityType="IkeoDBModel.Commande" Width="1.5" PointX="2.625" PointY="13" />
+        <EntityTypeShape EntityType="IkeoDBModel.Couleur" Width="1.5" PointX="10.25" PointY="19.375" />
+        <EntityTypeShape EntityType="IkeoDBModel.Notation" Width="1.5" PointX="9.375" PointY="8.75" />
+        <EntityTypeShape EntityType="IkeoDBModel.Panier" Width="1.5" PointX="3.25" PointY="4" />
+        <EntityTypeShape EntityType="IkeoDBModel.Roles" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="IkeoDBModel.Utilisateur" Width="1.5" PointX="5.75" PointY="1.75" />
+        <AssociationConnector Association="IkeoDBModel.FK_Adresse_Utilisateur" />
+        <AssociationConnector Association="IkeoDBModel.FK_ArtCou_Article" />
+        <AssociationConnector Association="IkeoDBModel.FK_Article_Categorie" />
+        <AssociationConnector Association="IkeoDBModel.FK_ArticleCommande_Article" />
+        <AssociationConnector Association="IkeoDBModel.FK_Notation_Article" />
+        <AssociationConnector Association="IkeoDBModel.FK_ArticleCommande_Commande" />
+        <AssociationConnector Association="IkeoDBModel.FK_ArtCou_Couleur" />
+        <AssociationConnector Association="IkeoDBModel.FK_Commande_Panier" />
+        <AssociationConnector Association="IkeoDBModel.FK_Notation_Utilisateur" />
+        <AssociationConnector Association="IkeoDBModel.FK_Utilisateur_Panier" />
+        <AssociationConnector Association="IkeoDBModel.FK_Utilisateur_Roles" />
+        <EntityTypeShape EntityType="IkeoDBModel.ImagesArticle" Width="1.5" PointX="5.375" PointY="19.125" />
+        <AssociationConnector Association="IkeoDBModel.FK_Image_Article" />
+        <EntityTypeShape EntityType="IkeoDBModel.ArticlePanier" Width="1.5" PointX="3.375" PointY="9.625" />
+        <AssociationConnector Association="IkeoDBModel.FK_AP_Article" />
+        <AssociationConnector Association="IkeoDBModel.FK_AP_Panier" />
+        <EntityTypeShape EntityType="IkeoDBModel.CarteBancaire" Width="1.5" PointX="9.875" PointY="4" />
+        <AssociationConnector Association="IkeoDBModel.FK_Utilisateur_CarteBancaire" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

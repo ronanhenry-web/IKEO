@@ -1,0 +1,136 @@
+﻿@{
+    var nmbrAdresse = ViewBag.NombreAdresseEnregistre;
+    List<IKEO.Models.Adresse> adresses = null;
+    if (nmbrAdresse > 0)
+    {
+        adresses = ViewBag.Adresse;
+    }
+
+}
+
+<div class="row">
+
+    <div class="col-6">
+        @if (nmbrAdresse > 0)
+        {
+            <div class="row row-cols-3">
+                @foreach (var ad in adresses)
+                {
+                    <div class="col-auto">
+                        <div class="card border-primary h-100">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>Adresse: @ad.adresse1</p>
+                                        <p>Code postal: @ad.codepostal</p>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-check-input align-middle" type="checkbox" name="adresse" value="@ad.id" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <button type="button" id="newAdresse" class="btn btn-primary mt-4"><i class="fa fa-plus"></i> Ajouter une adresse</button>
+        }
+    </div>
+
+    <div class="col-6">
+        <form @((nmbrAdresse != 0) ? "style=display:none;" : "") class="pt-4">
+
+            <div class="d-flex flex-column align-items-center gap-3">
+                <div class="d-flex gap-3 w-100">
+                    <div class="w-100">
+                        <label for="inputPrenom">Prénom</label>
+                        <input type="text" class="form-control" id="inputPrenom" placeholder="Entrez votre prénom" pattern="[A-Za-z]+" inputmode="text" title="Veuillez entrer un nom valide (lettres uniquement)">
+                    </div>
+                    <div class="w-100">
+                        <label for="inputNom">Nom</label>
+                        <input type="text" class="form-control" id="inputNom" placeholder="Entrez votre nom" pattern="[A-Za-z]+" inputmode="text" title="Veuillez entrer un nom valide (lettres uniquement)">
+                    </div>
+                </div>
+                <div class="w-100">
+                    <label for="inputAdresse">Adresse</label>
+                    <input type="text" class="form-control" id="inputAdresse" placeholder="Entrez votre adresse">
+                </div>
+                <div class="w-100">
+                    <label for="inputVille">Ville</label>
+                    <input type="text" class="form-control" id="inputVille" placeholder="Entrez votre ville" pattern="[A-Za-z]+" inputmode="text" title="Veuillez entrer une ville valide (lettres uniquement)">
+                </div>
+                <div class="w-100">
+                    <label for="inputCodePostal">Code postal</label>
+                    <input type="text" class="form-control" id="inputCodePostal" placeholder="Ex: 78130" pattern="\d{5}" inputmode="numeric" title="Veuillez entrer un code postal valide (5 chiffres)">
+                </div>
+
+            </div>
+
+            @*<button type="submit" class="btn btn-primary mt-3">Suivant</button>*@
+        </form>
+        <div class="d-flex justify-content-center mt-2">
+            <a id="nextStep" class="btn btn-primary w-100">Suivant</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#nextStep").on("click", function () {
+
+        if ($(".form-check-input:checked").length > 0) {
+            let idAd = $(".form-check-input:checked").val();
+            let formData = new FormData();
+            formData.append("idAd", idAd);
+             $.ajax({
+                url: "@Url.Action("VerifierAdresse", "Compte")",
+                type: "POST",
+                data: formData,
+                contentType: 'application/json',
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let locate = "@Url.Action("Index", "Panier", new { nomEtape = "EtapeTrois", idAdresse = "-1" })";
+                    locate = locate.replace("-1", response.idAdresse);
+                    window.location.href = locate;
+                }
+            });
+        }
+
+
+        let pre = $("#inputPrenom").val();
+        let nom = $("#inputNom").val();
+        let adr = $("#inputAdresse").val();
+        let vil = $("#inputVille").val();
+        let cod = $("#inputCodePostal").val();
+
+        if (pre != '' && nom != '' && adr != '' && vil != '' && cod != '') {
+            let formData = new FormData();
+            formData.append("prenom", pre);
+            formData.append("nom", nom);
+            formData.append("adresse", adr);
+            formData.append("ville", vil);
+            formData.append("code", cod);
+
+            $.ajax({
+                url: "@Url.Action("AjouterAdresse", "Compte")",
+                type: "POST",
+                data: formData,
+                contentType: 'application/json',
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let locate = "@Url.Action("Index", "Panier", new { nomEtape = "EtapeTrois", idAdresse = "-1" })";
+                    locate = locate.replace("-1", response.idAdresse);
+                    window.location.href = locate;
+                }
+            });
+        }
+
+    });
+    $("#newAdresse").on("click", function () {
+        $("form").show();
+    })
+</script>

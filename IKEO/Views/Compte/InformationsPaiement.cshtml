@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Mes cartes de paiement";
+}
+
+<h3 class="text-center pb-3">Mes cartes de paiement</h3>
+
+<div class="d-flex flex-column align-items-center gap-3">
+    <div class="w-50">
+        <label for="staticCbNom">Nom de la carte</label>
+        <input id="staticCbNom" type="text" readonly value="La carte" class="form-control">
+    </div>
+    <div class="w-50">
+        <label for="staticCbNumero">Numéro de carte</label>
+        <input id="staticCbNumero" type="text" readonly value="1234 5085 9652 3158" class="form-control">
+    </div>
+    <div class="d-flex gap-3 w-50">
+        <div class="w-100">
+            <label for="staticCbDateValidite">Date de validité</label>
+            <input id="staticCbDateValidite" type="text" readonly value="05/24" class="form-control">
+        </div>
+        <div class="w-100">
+            <label for="staticCbCryptogramme">Cryptogramme</label>
+            <input id="staticCbCryptogramme" type="password" readonly value="123" class="form-control">
+        </div>
+    </div>
+</div>
+

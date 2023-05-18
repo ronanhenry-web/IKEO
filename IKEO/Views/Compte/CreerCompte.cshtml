@@ -1,0 +1,156 @@
+﻿@*
+    * Authors: Ugo MARIN, Matéo BATISTA GOMES
+    * Date: 08/11/2022
+*@
+@{
+    ViewData["Title"] = "Créer un compte";
+}
+<div class="fil-ariane">
+    <h2>Créer un compte</h2>
+    <hr />
+
+
+    <form>
+        <div class="mb-3">
+            <label for="civilite" class="form-label">Civilité</label>
+            <select id="civilite" class="form-select">
+                <option hidden selected></option>
+                <option value="Autre">Autre</option>
+                <option value="M">M</option>
+                <option value="Mme">Mme</option>
+                <option value="---">Ne pas renseigner</option>
+            </select>
+            <p class="d-none fs-6 fw-light text-danger">Civilite est nécéssaire</p>
+        </div>
+
+        <div class="mb-3">
+            <label for="prenom" class="form-label">Prénom:</label>
+            <input type="text" class="form-control" id="prenom">
+        </div>
+
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom:</label>
+            <input type="text" class="form-control" id="nom">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Adresse email:</label>
+            <input type="email" class="form-control" id="email">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe:</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmation mot de passe:</label>
+            <input type="password" class="form-control" id="confirmPassword">
+            <p class="d-none fs-6 fw-light text-danger">Le mot de passe n'est pas le même</p>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="button" id="creerCompteBtn" class="btn btn-primary">Créer le compte</button>
+    </form>
+
+</div>
+<script>
+    $('#creerCompteBtn').on('click', function () {
+        let civilite = $('#civilite');
+        let prenom = $('#prenom');
+        let nom = $('#nom');
+        let adresseEmail = $('#email');
+        let password = $('#password');
+        let passwordCheck = $('#confirmPassword');
+
+        let peutCreerCompte = true;
+
+        if (password.val() != passwordCheck.val()) {
+            $('#confirmPassword').parent().find("p").removeClass("d-none");
+            peutCreerCompte = false;
+        }
+        let informationIndividu = [
+            civilite,
+            prenom,
+            nom,
+            adresseEmail,
+            password,
+            passwordCheck
+        ]
+        informationIndividu.forEach(function (e) {
+            e.removeClass("border-danger");
+            if (!checkIfEmpty(e.val())) {
+                peutCreerCompte = false;
+                e.addClass("border-danger");
+            }
+        });
+
+        if (peutCreerCompte) {
+            $.ajax({
+                url: "@Url.Action("CreerCompte", "Compte")",
+                data: {
+                    civilite: civilite.val(),
+                    prenom: prenom.val(),
+                    nom: nom.val(),
+                    email: adresseEmail.val(),
+                    password: password.val(),
+                    passwordCheck: passwordCheck.val(),
+                },
+                success: function (reponseBackEnd) {
+                    if (reponseBackEnd.type == "ok") {
+                        $.ajax({
+                            url: "@Url.Action("Connecter","Compte")",
+                            data: {
+                                email: adresseEmail.val(),
+                                password: password.val()
+                            },
+                            success: function (reponseBackEnd) {
+                                if (reponseBackEnd.type == "ok")
+                                    location.href = '@Url.Action("Index","Compte")'
+                          
+                            }
+                        })
+                    }
+                }
+            });
+        }
+
+    });
+
+
+    function checkIfEmpty(valeur) {
+        if (valeur === undefined || valeur.replace(/ /g, '') == "") {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    $("#confirmPassword").on("blur", function () {
+        if ($("#confirmPassword").val() != $("#password").val()) {
+            $('#confirmPassword').parent().find("p").removeClass("d-none");
+        }
+        else {
+            $('#confirmPassword').parent().find("p").addClass("d-none");
+        }
+
+    });
+    //Du style
+    $('#civilite').on('blur', function () {
+        let civilite = $('#civilite').val();
+        if (civilite === undefined || civilite == "") {
+            $('#civilite').parent().find("p").removeClass("d-none");
+        }
+    });
+    $("#civilite").on("change", function () {
+        let civilite = $('#civilite').val();
+        if (civilite != "") {
+            $('#civilite').parent().find("p").addClass("d-none");
+        }
+    });
+
+
+
+
+</script>

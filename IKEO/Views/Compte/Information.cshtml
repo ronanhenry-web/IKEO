@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Informations personnelles";
+    var utilisateur = ViewBag.infoUtilisateur;
+}
+
+<h3 class="text-center pb-3">Informations personnelles</h3>
+
+<div class="d-flex flex-column align-items-center gap-3">
+    <div class="w-50">
+        <label for="staticCivilite">Civilité</label>
+        <input id="staticCivilite" type="text" readonly value="@utilisateur.civilite" class="form-control">
+    </div>
+    <div class="w-50">
+        <label for="staticPrenom">Prénom</label>
+        <input id="staticPrenom" type="text" readonly value="@utilisateur.prenom" class="form-control">
+    </div>
+    <div class="w-50">
+        <label for="staticNom">Nom</label>
+        <input id="staticNom" type="text" readonly value="@utilisateur.nom" class="form-control">
+    </div>
+    <div class="w-50">
+        <label for="staticEmail">Email</label>
+        <input id="staticEmail" type="text" readonly value="@utilisateur.email" class="form-control">
+    </div>
+</div>
+
+@*<div class="container">
+    <div class="row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="text" readonly value="@utilisateur.email" class="form-control">
+        </div>
+        <label for="staticEmail" class="col-sm-2 col-form-label">Civilité</label>
+        <div class="col-sm-10">
+            <input type="text" readonly value="@utilisateur.civilite" class="form-control">
+        </div>
+        <label for="staticEmail" class="col-sm-2 col-form-label">Nom</label>
+        <div class="col-sm-10">
+            <input type="text" readonly value="@utilisateur.prenom" class="form-control">
+        </div>
+        <label for="staticEmail" class="col-sm-2 col-form-label">Prénom</label>
+        <div class="col-sm-10">
+            <input type="text" readonly value="@utilisateur.nom" class="form-control">
+        </div>
+    </div>
+</div>*@
+

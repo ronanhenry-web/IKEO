@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IkeoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="IkeoDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Adresse" EntityType="IkeoDBModel.Adresse" />
+    <EntitySet Name="Article" EntityType="IkeoDBModel.Article" />
+    <EntitySet Name="ArticleCommande" EntityType="IkeoDBModel.ArticleCommande" />
+    <EntitySet Name="ArticleCouleurs" EntityType="IkeoDBModel.ArticleCouleurs" />
+    <EntitySet Name="Categorie" EntityType="IkeoDBModel.Categorie" />
+    <EntitySet Name="Commande" EntityType="IkeoDBModel.Commande" />
+    <EntitySet Name="Couleur" EntityType="IkeoDBModel.Couleur" />
+    <EntitySet Name="Notation" EntityType="IkeoDBModel.Notation" />
+    <EntitySet Name="Panier" EntityType="IkeoDBModel.Panier" />
+    <EntitySet Name="Roles" EntityType="IkeoDBModel.Roles" />
+    <EntitySet Name="Utilisateur" EntityType="IkeoDBModel.Utilisateur" />
+    <AssociationSet Name="FK_Adresse_Utilisateur" Association="IkeoDBModel.FK_Adresse_Utilisateur">
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+      <End Role="Adresse" EntitySet="Adresse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArtCou_Article" Association="IkeoDBModel.FK_ArtCou_Article">
+      <End Role="Article" EntitySet="Article" />
+      <End Role="ArticleCouleurs" EntitySet="ArticleCouleurs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Article_Categorie" Association="IkeoDBModel.FK_Article_Categorie">
+      <End Role="Categorie" EntitySet="Categorie" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleCommande_Article" Association="IkeoDBModel.FK_ArticleCommande_Article">
+      <End Role="Article" EntitySet="Article" />
+      <End Role="ArticleCommande" EntitySet="ArticleCommande" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notation_Article" Association="IkeoDBModel.FK_Notation_Article">
+      <End Role="Article" EntitySet="Article" />
+      <End Role="Notation" EntitySet="Notation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleCommande_Commande" Association="IkeoDBModel.FK_ArticleCommande_Commande">
+      <End Role="Commande" EntitySet="Commande" />
+      <End Role="ArticleCommande" EntitySet="ArticleCommande" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArtCou_Couleur" Association="IkeoDBModel.FK_ArtCou_Couleur">
+      <End Role="Couleur" EntitySet="Couleur" />
+      <End Role="ArticleCouleurs" EntitySet="ArticleCouleurs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Commande_Panier" Association="IkeoDBModel.FK_Commande_Panier">
+      <End Role="Panier" EntitySet="Panier" />
+      <End Role="Commande" EntitySet="Commande" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notation_Utilisateur" Association="IkeoDBModel.FK_Notation_Utilisateur">
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+      <End Role="Notation" EntitySet="Notation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Utilisateur_Panier" Association="IkeoDBModel.FK_Utilisateur_Panier">
+      <End Role="Panier" EntitySet="Panier" />
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Utilisateur_Roles" Association="IkeoDBModel.FK_Utilisateur_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+    </AssociationSet>
+    <EntitySet Name="ImagesArticle" EntityType="IkeoDBModel.ImagesArticle" />
+    <AssociationSet Name="FK_Image_Article" Association="IkeoDBModel.FK_Image_Article">
+      <End Role="Article" EntitySet="Article" />
+      <End Role="ImagesArticle" EntitySet="ImagesArticle" />
+    </AssociationSet>
+    <EntitySet Name="ArticlePanier" EntityType="IkeoDBModel.ArticlePanier" />
+    <AssociationSet Name="FK_AP_Article" Association="IkeoDBModel.FK_AP_Article">
+      <End Role="Article" EntitySet="Article" />
+      <End Role="ArticlePanier" EntitySet="ArticlePanier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AP_Panier" Association="IkeoDBModel.FK_AP_Panier">
+      <End Role="Panier" EntitySet="Panier" />
+      <End Role="ArticlePanier" EntitySet="ArticlePanier" />
+    </AssociationSet>
+    <EntitySet Name="CarteBancaire" EntityType="IkeoDBModel.CarteBancaire" />
+    <AssociationSet Name="FK_Utilisateur_CarteBancaire" Association="IkeoDBModel.FK_Utilisateur_CarteBancaire">
+      <End Role="CarteBancaire" EntitySet="CarteBancaire" />
+      <End Role="Utilisateur" EntitySet="Utilisateur" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Adresse">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="codepostal" Type="Decimal" Nullable="false" Precision="5" Scale="0" />
+    <Property Name="adresse1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="id_utilisateur" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Utilisateur" Relationship="IkeoDBModel.FK_Adresse_Utilisateur" FromRole="Adresse" ToRole="Utilisateur" />
+  </EntityType>
+  <EntityType Name="Article">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="prix" Type="Double" />
+    <Property Name="nbrStock" Type="Int32" />
+    <Property Name="id_categorie" Type="Int32" Nullable="false" />
+    <Property Name="disponibilite" Type="Boolean" />
+    <NavigationProperty Name="ArticleCouleurs" Relationship="IkeoDBModel.FK_ArtCou_Article" FromRole="Article" ToRole="ArticleCouleurs" />
+    <NavigationProperty Name="Categorie" Relationship="IkeoDBModel.FK_Article_Categorie" FromRole="Article" ToRole="Categorie" />
+    <NavigationProperty Name="ArticleCommande" Relationship="IkeoDBModel.FK_ArticleCommande_Article" FromRole="Article" ToRole="ArticleCommande" />
+    <NavigationProperty Name="Notation" Relationship="IkeoDBModel.FK_Notation_Article" FromRole="Article" ToRole="Notation" />
+    <NavigationProperty Name="ImagesArticle" Relationship="IkeoDBModel.FK_Image_Article" FromRole="Article" ToRole="ImagesArticle" />
+    <NavigationProperty Name="ArticlePanier" Relationship="IkeoDBModel.FK_AP_Article" FromRole="Article" ToRole="ArticlePanier" />
+  </EntityType>
+  <EntityType Name="ArticleCommande">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_commande" Type="Int32" Nullable="false" />
+    <Property Name="id_article" Type="Int32" Nullable="false" />
+    <Property Name="quantite" Type="Int32" Nullable="false" />
+    <Property Name="prix" Type="Double" />
+    <NavigationProperty Name="Article" Relationship="IkeoDBModel.FK_ArticleCommande_Article" FromRole="ArticleCommande" ToRole="Article" />
+    <NavigationProperty Name="Commande" Relationship="IkeoDBModel.FK_ArticleCommande_Commande" FromRole="ArticleCommande" ToRole="Commande" />
+  </EntityType>
+  <EntityType Name="ArticleCouleurs">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_article" Type="Int32" Nullable="false" />
+    <Property Name="id_couleur" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Article" Relationship="IkeoDBModel.FK_ArtCou_Article" FromRole="ArticleCouleurs" ToRole="Article" />
+    <NavigationProperty Name="Couleur" Relationship="IkeoDBModel.FK_ArtCou_Couleur" FromRole="ArticleCouleurs" ToRole="Couleur" />
+  </EntityType>
+  <EntityType Name="Categorie">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Article" Relationship="IkeoDBModel.FK_Article_Categorie" FromRole="Categorie" ToRole="Article" />
+  </EntityType>
+  <EntityType Name="Commande">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="numero_commande" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="prix_commande" Type="Double" Nullable="false" />
+    <Property Name="etat_livraison" Type="Double" Nullable="false" />
+    <Property Name="etat_paiement" Type="Boolean" Nullable="false" />
+    <Property Name="id_panier" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="ArticleCommande" Relationship="IkeoDBModel.FK_ArticleCommande_Commande" FromRole="Commande" ToRole="ArticleCommande" />
+    <NavigationProperty Name="Panier" Relationship="IkeoDBModel.FK_Commande_Panier" FromRole="Commande" ToRole="Panier" />
+  </EntityType>
+  <EntityType Name="Couleur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="couleur1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ArticleCouleurs" Relationship="IkeoDBModel.FK_ArtCou_Couleur" FromRole="Couleur" ToRole="ArticleCouleurs" />
+    <Property Name="hexadecimal" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Notation">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_article" Type="Int32" Nullable="false" />
+    <Property Name="id_utilisateur" Type="Int32" Nullable="false" />
+    <Property Name="note" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Article" Relationship="IkeoDBModel.FK_Notation_Article" FromRole="Notation" ToRole="Article" />
+    <NavigationProperty Name="Utilisateur" Relationship="IkeoDBModel.FK_Notation_Utilisateur" FromRole="Notation" ToRole="Utilisateur" />
+  </EntityType>
+  <EntityType Name="Panier">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Commande" Relationship="IkeoDBModel.FK_Commande_Panier" FromRole="Panier" ToRole="Commande" />
+    <NavigationProperty Name="Utilisateur" Relationship="IkeoDBModel.FK_Utilisateur_Panier" FromRole="Panier" ToRole="Utilisateur" />
+    <NavigationProperty Name="ArticlePanier" Relationship="IkeoDBModel.FK_AP_Panier" FromRole="Panier" ToRole="ArticlePanier" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="designation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Utilisateur" Relationship="IkeoDBModel.FK_Utilisateur_Roles" FromRole="Roles" ToRole="Utilisateur" />
+  </EntityType>
+  <EntityType Name="Utilisateur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="mdp" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="nom" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="prenom" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="confirm" Type="Boolean" Nullable="false" />
+    <Property Name="id_panier" Type="Int64" Nullable="false" />
+    <Property Name="id_cartebancaire" Type="Int32" />
+    <Property Name="id_role" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="civilite" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Adresse" Relationship="IkeoDBModel.FK_Adresse_Utilisateur" FromRole="Utilisateur" ToRole="Adresse" />
+    <NavigationProperty Name="Notation" Relationship="IkeoDBModel.FK_Notation_Utilisateur" FromRole="Utilisateur" ToRole="Notation" />
+    <NavigationProperty Name="Panier" Relationship="IkeoDBModel.FK_Utilisateur_Panier" FromRole="Utilisateur" ToRole="Panier" />
+    <NavigationProperty Name="Roles" Relationship="IkeoDBModel.FK_Utilisateur_Roles" FromRole="Utilisateur" ToRole="Roles" />
+    <NavigationProperty Name="CarteBancaire" Relationship="IkeoDBModel.FK_Utilisateur_CarteBancaire" FromRole="Utilisateur" ToRole="CarteBancaire" />
+  </EntityType>
+  <Association Name="FK_Adresse_Utilisateur">
+    <End Type="IkeoDBModel.Utilisateur" Role="Utilisateur" Multiplicity="1" />
+    <End Type="IkeoDBModel.Adresse" Role="Adresse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Adresse">
+        <PropertyRef Name="id_utilisateur" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArtCou_Article">
+    <End Type="IkeoDBModel.Article" Role="Article" Multiplicity="1" />
+    <End Type="IkeoDBModel.ArticleCouleurs" Role="ArticleCouleurs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleCouleurs">
+        <PropertyRef Name="id_article" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Article_Categorie">
+    <End Type="IkeoDBModel.Categorie" Role="Categorie" Multiplicity="1" />
+    <End Type="IkeoDBModel.Article" Role="Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="id_categorie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleCommande_Article">
+    <End Type="IkeoDBModel.Article" Role="Article" Multiplicity="1" />
+    <End Type="IkeoDBModel.ArticleCommande" Role="ArticleCommande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleCommande">
+        <PropertyRef Name="id_article" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notation_Article">
+    <End Type="IkeoDBModel.Article" Role="Article" Multiplicity="1" />
+    <End Type="IkeoDBModel.Notation" Role="Notation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Notation">
+        <PropertyRef Name="id_article" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleCommande_Commande">
+    <End Type="IkeoDBModel.Commande" Role="Commande" Multiplicity="1" />
+    <End Type="IkeoDBModel.ArticleCommande" Role="ArticleCommande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Commande">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleCommande">
+        <PropertyRef Name="id_commande" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArtCou_Couleur">
+    <End Type="IkeoDBModel.Couleur" Role="Couleur" Multiplicity="1" />
+    <End Type="IkeoDBModel.ArticleCouleurs" Role="ArticleCouleurs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Couleur">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleCouleurs">
+        <PropertyRef Name="id_couleur" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Commande_Panier">
+    <End Type="IkeoDBModel.Panier" Role="Panier" Multiplicity="1" />
+    <End Type="IkeoDBModel.Commande" Role="Commande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Panier">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Commande">
+        <PropertyRef Name="id_panier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notation_Utilisateur">
+    <End Type="IkeoDBModel.Utilisateur" Role="Utilisateur" Multiplicity="1" />
+    <End Type="IkeoDBModel.Notation" Role="Notation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Notation">
+        <PropertyRef Name="id_utilisateur" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Utilisateur_Panier">
+    <End Type="IkeoDBModel.Panier" Role="Panier" Multiplicity="1" />
+    <End Type="IkeoDBModel.Utilisateur" Role="Utilisateur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Panier">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Utilisateur">
+        <PropertyRef Name="id_panier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Utilisateur_Roles">
+    <End Type="IkeoDBModel.Roles" Role="Roles" Multiplicity="1" />
+    <End Type="IkeoDBModel.Utilisateur" Role="Utilisateur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Utilisateur">
+        <PropertyRef Name="id_role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ImagesArticle">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_article" Type="Int32" />
+    <Property Name="nom_image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Article" Relationship="IkeoDBModel.FK_Image_Article" FromRole="ImagesArticle" ToRole="Article" />
+  </EntityType>
+  <Association Name="FK_Image_Article">
+    <End Type="IkeoDBModel.Article" Role="Article" Multiplicity="0..1" />
+    <End Type="IkeoDBModel.ImagesArticle" Role="ImagesArticle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ImagesArticle">
+        <PropertyRef Name="id_article" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ArticlePanier">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_panier" Type="Int64" />
+    <Property Name="id_article" Type="Int32" />
+    <NavigationProperty Name="Article" Relationship="IkeoDBModel.FK_AP_Article" FromRole="ArticlePanier" ToRole="Article" />
+    <NavigationProperty Name="Panier" Relationship="IkeoDBModel.FK_AP_Panier" FromRole="ArticlePanier" ToRole="Panier" />
+    <Property Name="nombre_article" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_AP_Article">
+    <End Type="IkeoDBModel.Article" Role="Article" Multiplicity="0..1" />
+    <End Type="IkeoDBModel.ArticlePanier" Role="ArticlePanier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticlePanier">
+        <PropertyRef Name="id_article" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AP_Panier">
+    <End Type="IkeoDBModel.Panier" Role="Panier" Multiplicity="0..1" />
+    <End Type="IkeoDBModel.ArticlePanier" Role="ArticlePanier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Panier">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticlePanier">
+        <PropertyRef Name="id_panier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CarteBancaire">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="numero" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="dateExpiration" Type="String" Unicode="false" FixedLength="false" MaxLength="Max" />
+    <Property Name="code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="nom" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Utilisateur" Relationship="IkeoDBModel.FK_Utilisateur_CarteBancaire" FromRole="CarteBancaire" ToRole="Utilisateur" />
+  </EntityType>
+  <Association Name="FK_Utilisateur_CarteBancaire">
+    <End Type="IkeoDBModel.CarteBancaire" Role="CarteBancaire" Multiplicity="0..1" />
+    <End Type="IkeoDBModel.Utilisateur" Role="Utilisateur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarteBancaire">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Utilisateur">
+        <PropertyRef Name="id_cartebancaire" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

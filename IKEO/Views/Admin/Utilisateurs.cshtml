@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Gestion des utilisateurs";
+}
+@if (!IKEO.Tools.LayoutTools.GotAdminRights())
+{
+    Response.RedirectToRoute(new
+    {
+        controller = "Home",
+        action = "Index"
+    });
+}
+<h2 class="text-center mb-4">Gestion des utilisateurs</h2>
+<div class="container">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Rôle</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("GetUtilisateurs", "Admin")",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            if (response.type == "ok") {
+                let html = "";
+                if (response.message.length > 0) {
+                    response.message.forEach(function (utilisateur) {
+                        html +=
+                            "<tr data-id='" + utilisateur.Id +"'> " +
+                            "<td>" + utilisateur.Nom + "</td>" +
+                            "<td>" + utilisateur.Prenom +"</td>" +
+                            "<td>" + utilisateur.Email +"</td>" +
+                            "<td>" + utilisateur.Role +"</td>" +
+                            "<td></td>" +
+                            "</tr>"
+                    })
+                }
+                else {
+                    html +=
+                        "<tr>" +
+                        "<td colspan='5'> Aucun utilisateurs enregistrés <\td>" +
+                        "</tr>"
+                }
+                $("tbody").append(html);
+            }
+        }
+    });
+</script>

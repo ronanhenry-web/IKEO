@@ -1,0 +1,52 @@
+﻿
+@{
+    var panier = ViewBag.Panier;
+}
+<div class="row">
+    <div class="col-md-6">
+
+        <h4>Votre Panier</h4>
+        <div class="border border-dark rounded-3 p-3 mb-3">
+            @foreach (var article in panier.ArticlePanier)
+            {
+                var imagePresentation = IKEO.Tools.LayoutTools.GetPresentationImage(article.id_article);
+                var prix = article.Article.prix * article.nombre_article;
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="~/Content/images/Articles/@article.id_article/@imagePresentation" alt="Image produit" class="mr-3" style="width: 100px;">
+                        <div class="mx-3">
+                            <h5 class="font-weight-bold">@article.Article.nom</h5>
+                            <p>Quantité : @article.nombre_article</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="font-weight-bold"> @prix €</p>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-6 h-100">
+        <h4>Coordonnées bancaires</h4>
+        <div class="border border-dark rounded-3 p-2 mb-3">
+            <p>Numéro de carte : 1234 5678 9012 3456</p>
+            <p>Titulaire de la carte : Sully</p>
+            <p>Date d'expiration : 09/24</p>
+        </div>
+
+        <h4>Adresse de livraison</h4>
+        <div class="border border-dark rounded-3 p-2">
+            <p>Nom : John Doe</p>
+            <p>Email : john.doe@example.com</p>
+            <p>Adresse : 123 Rue Principale</p>
+            <p>Ville : Rennes</p>
+        </div>
+
+        <div class="text-center mt-3">
+            <a class="btn btn-primary w-100" href="@Url.Action("Index", "Panier", new { nomEtape = "EtapeCinq" })">Valider la commande</a>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,46 @@
+﻿.form-login fieldset {
+    border: 1px groove #000 !important;
+    padding: 1.4rem 1.4rem 1.4rem 1.4rem !important;
+    margin: 0 0 0 0 !important;
+}
+
+.form-login {
+    width: 35%;
+}
+
+    .form-login input[type="text"], .form-login input[type="password"] {
+        border: none;
+    }
+
+    .form-login label {
+        font-weight: 600;
+    }
+
+    .form-login input[type="checkbox"] {
+        width: 25px;
+        height: 25px;
+    }
+
+    .form-login .sign-in {
+        width: 150px;
+    }
+
+    .form-login .btn-facebook {
+        background-color: #3B5998;
+    }
+
+    .form-login .btn-google {
+        background-color: #5589F5;
+    }
+
+    .form-login hr {
+        width: 45%;
+    }
+
+    .form-login a {
+        text-decoration: none;
+    }
+
+        .form-login a:hover {
+            text-decoration: underline;
+        }

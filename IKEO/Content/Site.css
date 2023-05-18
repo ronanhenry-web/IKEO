@@ -1,0 +1,46 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+}
+.checked {
+    color: orange;
+}
+
+.start-66 {
+    left: 66.6% !important;
+}
+
+.start-33 {
+    left: 33.3% !important;
+}
+
+.w-15 {
+    width: 15% !important;
+}
+
+.w-35 {
+    width: 35% !important;
+}
+
+.font-size-sm {
+    font-size: 0.8rem !important;
+}
+
+.btn-facebook {
+    background-color: #395592;
+    color: white;
+}

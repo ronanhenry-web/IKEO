@@ -1,0 +1,68 @@
+﻿<form class="pt-5"  autocomplete="off">
+    <div class="d-flex flex-column align-items-center gap-3">
+        <div class="w-50">
+            <label for="inputNumeroCarte">Numéro de carte</label>
+            <input type="text" class="form-control" id="inputNumeroCarte" placeholder="Entrez votre numéro de carte" pattern="\d{16}" inputmode="numeric" title="Veuillez entrer un numéro de carte valide (16 chiffres)">
+        </div>
+        <div class="w-50">
+            <label for="inputTitulaire">Titulaire de la carte</label>
+            <input type="text" class="form-control" id="inputTitulaire" placeholder="Entrez le nom du titulaire de la carte" pattern="[A-Za-z\s]+" inputmode="text" title="Veuillez entrer un nom de titulaire valide (lettres uniquement)">
+        </div>
+        <div class="d-flex gap-3 w-50">
+            <div class="w-100">
+                <label for="inputDateExpiration">Date d'expiration</label>
+                <input type="text" class="form-control" id="inputDateExpiration" placeholder="MM/AA" pattern="(0[1-9]|1[0-2])\/\d{2}" inputmode="text" title="Veuillez entrer une date d'expiration valide (MM/AA)">
+            </div>
+            <div class="w-100">
+                <label for="inputCodeSecurite">Code de sécurité</label>
+                <input type="password" class="form-control" id="inputCodeSecurite" placeholder="Ex: 123" pattern="\d{3}" inputmode="numeric" title="Veuillez entrer un code de sécurité valide (3 chiffres)">
+            </div>
+        </div>
+        <a class="btn btn-primary w-50" id="nextStep" >Suivant</a>
+    </div>
+</form>
+<script>
+href="@Url.Action("Index", "Panier", new { nomEtape = "EtapeQuatre" })"
+    $.ajax({
+        url: "@Url.Action("GetCarteBancaire", "Panier")",
+        success: function (reponseBackEnd) {
+            if (reponseBackEnd.type == "ok" && reponseBackEnd.message != "Aucune carte bancaire enregistrée") {
+                $("#inputNumeroCarte").val(reponseBackEnd.message.numero);
+                $("#inputTitulaire").val(reponseBackEnd.message.nom);
+                $("#inputDateExpiration").val(reponseBackEnd.message.dateExpiration);
+            }
+        }
+    });
+
+    $("#nextStep").on("click", function () {
+
+        let num = $("#inputNumeroCarte").val();
+        let tit = $("#inputTitulaire").val();
+        let dat = $("#inputDateExpiration").val();
+        let cod = $("#inputCodeSecurite").val();
+
+        if (num != '' && tit != '' && dat != '' && cod != '') {
+            let formData = new FormData();
+            formData.append("numeroCb", num);
+            formData.append("titulaireCb", tit);
+            formData.append("dateExp", dat);
+            formData.append("codeCb", cod);
+             $.ajax({
+                url: "@Url.Action("EnregistrerCB", "Panier")",
+                type: "POST",
+                data: formData,
+                contentType: 'application/json',
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let locate = "@Url.Action("Index", "Panier", new { nomEtape = "EtapeQuatre", idAdresse = "-1", idCb = "-2" })";
+                    locate = locate.replace("-1", "@ViewBag.idAdresse");
+                    locate = locate.replace("-2", response.idCb);
+                    window.location.href = locate;
+                }
+            });
+
+        }
+    });
+</script>
