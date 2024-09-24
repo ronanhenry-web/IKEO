@@ -1,15 +1,15 @@
-# Projet IKEO
+# IKEO Project
 
-Objectif répondre à un appel d'offre sur un site de E-commerce
+Aimed at responding to a request for proposal (RFP) for an E-commerce website
 
-## Démarrer
+## Getting Started
 
-Le projet a été créé sous Microsoft Visual Studio, pour le démarrer suivre les étapes suivantes.
+The project was created using Microsoft Visual Studio. To get it running, follow these steps :
 
-- Avoir une BDD sous SQL Server avec SQL Server Management
-- Run l'application avec le fichier main
+- Set up a database using SQL Server with SQL Server Management
+- Run the application using the main file
 
-## Sources & Outils
+## Sources & Tools
 
 <a href="https://dotnet.microsoft.com/" target="_blank" rel="noreferrer"> <img src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white"/> </a>
 
